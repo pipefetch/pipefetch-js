@@ -203,6 +203,92 @@ export interface Comments {
   }[];
 }
 
+export interface WebsiteContactsOptions {
+  /** How many pages of the site to read, contact, imprint and about pages first: 1 to 10. Defaults to 5. */
+  pages?: number;
+}
+
+export interface WebsiteContacts {
+  /** The page the reading started from, after redirects. */
+  url: string;
+  domain: string | null;
+  companyName: string | null;
+  /** The best address for writing to the company: on the website's own domain first, then shared mailboxes. */
+  primaryEmail: string | null;
+  primaryPhone: string | null;
+  emails: {
+    email: string;
+    /** "role" is a shared mailbox (info@, sales@), "personal" a person's address. */
+    type: 'role' | 'personal' | null;
+    onWebsiteDomain: boolean;
+    /** Gmail, Outlook and other free mailbox providers. */
+    freeProvider: boolean;
+    /** Whether the address's domain has mail servers; null when it could not be checked. */
+    mxFound: boolean | null;
+    foundOn: string[];
+  }[];
+  phones: {
+    /** International format (+4930123456) when the number is valid for its country. */
+    phone: string;
+    national: string | null;
+    country: string | null;
+    lineType: string | null;
+    source: 'link' | 'structured_data' | 'text' | null;
+    foundOn: string[];
+  }[];
+  /** Numbers found in the page text with no phone label next to them. Check before use. */
+  phonesUncertain: string[];
+  /** Profile addresses per platform; an empty list where the site links none. */
+  socials: Record<
+    | 'linkedin' | 'facebook' | 'instagram' | 'twitter' | 'youtube' | 'tiktok' | 'pinterest' | 'threads'
+    | 'snapchat' | 'telegram' | 'whatsapp' | 'discord' | 'reddit' | 'github' | 'bluesky' | 'medium',
+    string[]
+  >;
+  contactPageUrl: string | null;
+  contactFormUrl: string | null;
+  hasContactForm: boolean;
+  address: string | null;
+  country: string | null;
+  language: string | null;
+  description: string | null;
+  logoUrl: string | null;
+  /** The pages that were read. */
+  pagesRead: string[];
+}
+
+export interface WebsiteBrand {
+  url: string;
+  domain: string;
+  /** The company name the site states, or the part of its title that matches the domain; null rather than a guess. */
+  name: string | null;
+  title: string | null;
+  description: string | null;
+  /** null when the site draws its logo with CSS only: use `icon` then. */
+  logo: {
+    /** An image address, or a `data:` URI for a logo drawn as inline SVG. Both work as an image source. */
+    url: string;
+    format: string | null;
+    /** Where it was found: the site's structured data, its header or home link, or elsewhere on the page. */
+    source: 'structured-data' | 'header' | 'page' | null;
+  } | null;
+  /** The site icon. */
+  icon: string | null;
+  icons: string[];
+  /** The image the site shows when it is shared on social media. */
+  image: string | null;
+  colors: {
+    primary: { hex: string; rgb: string | null } | null;
+    secondary: { hex: string; rgb: string | null } | null;
+    /** The theme color the site declares for browsers, when it does. */
+    theme: string | null;
+  };
+  fonts: { family: string; source: string | null }[];
+  socials: { platform: string; url: string }[];
+  twitterHandle: string | null;
+  /** Up to two large images from the home page. */
+  images: string[];
+}
+
 export interface Account {
   email: string;
   credits: number;
@@ -221,7 +307,7 @@ export declare class InvalidRequestError extends PipefetchError {}
 export declare class AuthenticationError extends PipefetchError {}
 /** 402: the account has fewer credits than the request costs. */
 export declare class InsufficientCreditsError extends PipefetchError {}
-/** 404: YouTube has nothing to return for this request. Not charged. */
+/** 404: there is nothing to return for this request. Not charged. */
 export declare class NotFoundError extends PipefetchError {}
 /** 429: too many requests in a minute, or too many requests today that found nothing. */
 export declare class RateLimitError extends PipefetchError {}
@@ -245,6 +331,10 @@ export declare class Pipefetch {
   search(query: string, options?: SearchOptions): Promise<SearchResults>;
   /** Top or newest comments of a video (up to 100). 1 credit per started 20 comments. */
   comments(video: string, options?: CommentsOptions): Promise<Comments>;
+  /** The emails, phone numbers and social profiles a website publishes, with its contact page and address. 1 credit. */
+  websiteContacts(url: string, options?: WebsiteContactsOptions): Promise<WebsiteContacts>;
+  /** A company's logo, icon, brand colors, fonts, description and social profiles, read from its website. 1 credit. */
+  websiteBrand(url: string): Promise<WebsiteBrand>;
   /** The account behind the key: its email and credit balance. Free. */
   account(): Promise<Account>;
 }

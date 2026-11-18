@@ -47,6 +47,8 @@ test('every method calls its endpoint with its parameters', async () => {
   await pf.channelShorts('@MrBeast');
   await pf.search('web scraping', { sort: 'newest', uploaded: 'week', limit: 40, country: undefined });
   await pf.comments('jNQXAC9IVRw', { limit: 100, sort: 'newest' });
+  await pf.websiteContacts('apify.com', { pages: 3 });
+  await pf.websiteBrand('https://stripe.com');
   await pf.account();
   assert.deepEqual(
     fake.calls.map((c) => c.url.pathname + c.url.search),
@@ -57,6 +59,8 @@ test('every method calls its endpoint with its parameters', async () => {
       '/v1/youtube/channel/shorts?channel=%40MrBeast',
       '/v1/youtube/search?q=web+scraping&sort=newest&uploaded=week&limit=40',
       '/v1/youtube/comments?video=jNQXAC9IVRw&limit=100&sort=newest',
+      '/v1/web/contacts?url=apify.com&pages=3',
+      '/v1/web/brand?url=https%3A%2F%2Fstripe.com',
       '/v1/account',
     ],
   );

@@ -1,10 +1,11 @@
 /**
- * Pipefetch client for JavaScript: YouTube transcripts, videos, channels, search and comments as JSON.
+ * Pipefetch client for JavaScript: YouTube transcripts, videos, channels, search and comments, and the
+ * contact details and brand a company's website publishes, as JSON.
  * No dependencies. Works wherever `fetch` exists: Node.js 18+, Deno, Bun, Cloudflare Workers.
  * Documentation: https://pipefetch.com/docs
  */
 
-export const VERSION = '0.1.1';
+export const VERSION = '0.2.0';
 const DEFAULT_BASE_URL = 'https://pipefetch.com';
 /** Statuses that mean "try again": the request was not charged and may succeed on a retry. */
 const RETRYABLE_STATUS = new Set([502, 503, 504]);
@@ -105,6 +106,16 @@ export class Pipefetch {
   /** Top or newest comments of a video (up to 100). 1 credit per started 20 comments. */
   comments(video, options = {}) {
     return this.#get('/v1/youtube/comments', { video, ...options });
+  }
+
+  /** The emails, phone numbers and social profiles a website publishes, with its contact page and address. 1 credit. */
+  websiteContacts(url, options = {}) {
+    return this.#get('/v1/web/contacts', { url, ...options });
+  }
+
+  /** A company's logo, icon, brand colors, fonts, description and social profiles, read from its website. 1 credit. */
+  websiteBrand(url) {
+    return this.#get('/v1/web/brand', { url });
   }
 
   /** The account behind the key: its email and credit balance. Free. */
