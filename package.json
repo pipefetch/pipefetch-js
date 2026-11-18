@@ -1,0 +1,44 @@
+{
+  "name": "pipefetch",
+  "version": "0.1.0",
+  "description": "YouTube transcripts, video details, channels, search and comments as JSON. Client for the Pipefetch API.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "types": "./index.d.ts",
+  "files": [
+    "src",
+    "index.d.ts"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "youtube",
+    "youtube-transcript",
+    "youtube-api",
+    "youtube-search",
+    "youtube-comments",
+    "transcript",
+    "captions",
+    "subtitles",
+    "pipefetch"
+  ],
+  "homepage": "https://pipefetch.com/docs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pipefetch/pipefetch-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pipefetch/pipefetch-js/issues"
+  },
+  "author": "Pipefetch (https://pipefetch.com)",
+  "license": "MIT"
+}
