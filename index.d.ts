@@ -289,6 +289,72 @@ export interface WebsiteBrand {
   images: string[];
 }
 
+export interface InstagramProfileOptions {
+  /** Include the latest posts and Reels. Defaults to true; the price is the same either way. */
+  posts?: boolean;
+}
+
+export interface InstagramPost {
+  id: string;
+  shortCode: string;
+  url: string;
+  type: 'Image' | 'Video' | 'Sidecar' | null;
+  isReel: boolean;
+  isPinned: boolean;
+  caption: string | null;
+  hashtags: string[];
+  mentions: string[];
+  likeCount: number | null;
+  commentCount: number | null;
+  playCount: number | null;
+  durationSeconds: number | null;
+  publishedAt: string | null;
+  isPaidPartnership: boolean | null;
+  /** Instagram's own signed address: it stops working after some hours. */
+  imageUrl: string | null;
+  /** Instagram's own signed address: it stops working after some hours. */
+  videoUrl: string | null;
+  ownerUsername: string | null;
+  coauthors: string[];
+  taggedUsers: string[];
+  locationName: string | null;
+}
+
+export interface InstagramProfile {
+  id: string;
+  username: string;
+  url: string;
+  fullName: string | null;
+  biography: string | null;
+  /** The exact count, not the rounded one Instagram displays. */
+  followerCount: number | null;
+  followingCount: number | null;
+  postCount: number | null;
+  isVerified: boolean;
+  isPrivate: boolean;
+  accountType: 'personal' | 'business' | 'creator' | null;
+  /** Email addresses written in the bio. */
+  emails: string[];
+  /** Phone numbers written in the bio. */
+  phones: string[];
+  externalUrl: string | null;
+  links: { title: string | null; url: string }[];
+  pronouns: string[];
+  hasReels: boolean | null;
+  hasThreadsProfile: boolean | null;
+  /** Instagram's own signed address: it stops working after some hours. */
+  profilePicUrl: string | null;
+  latestPostAt: string | null;
+  avgLikes: number | null;
+  avgComments: number | null;
+  avgPlays: number | null;
+  /** Average likes plus comments of the latest posts as a percentage of followers: 0.088 means 0.088 %. */
+  engagementRate: number | null;
+  postsPerWeek: number | null;
+  /** About the 12 latest Reels and the newest grid posts, pinned posts included. Empty for a private account. */
+  latestPosts: InstagramPost[];
+}
+
 export interface Account {
   email: string;
   credits: number;
@@ -335,6 +401,8 @@ export declare class Pipefetch {
   websiteContacts(url: string, options?: WebsiteContactsOptions): Promise<WebsiteContacts>;
   /** A company's logo, icon, brand colors, fonts, description and social profiles, read from its website. 1 credit. */
   websiteBrand(url: string): Promise<WebsiteBrand>;
+  /** A public Instagram account: exact counts, bio, links, engagement and its latest posts and Reels. 2 credits. */
+  instagramProfile(username: string, options?: InstagramProfileOptions): Promise<InstagramProfile>;
   /** The account behind the key: its email and credit balance. Free. */
   account(): Promise<Account>;
 }

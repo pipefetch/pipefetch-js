@@ -1,11 +1,11 @@
 /**
- * Pipefetch client for JavaScript: YouTube transcripts, videos, channels, search and comments, and the
- * contact details and brand a company's website publishes, as JSON.
+ * Pipefetch client for JavaScript: YouTube transcripts, videos, channels, search and comments, the
+ * contact details and brand a company's website publishes, and public Instagram profiles, as JSON.
  * No dependencies. Works wherever `fetch` exists: Node.js 18+, Deno, Bun, Cloudflare Workers.
  * Documentation: https://pipefetch.com/docs
  */
 
-export const VERSION = '0.2.0';
+export const VERSION = '0.3.0';
 const DEFAULT_BASE_URL = 'https://pipefetch.com';
 /** Statuses that mean "try again": the request was not charged and may succeed on a retry. */
 const RETRYABLE_STATUS = new Set([502, 503, 504]);
@@ -116,6 +116,11 @@ export class Pipefetch {
   /** A company's logo, icon, brand colors, fonts, description and social profiles, read from its website. 1 credit. */
   websiteBrand(url) {
     return this.#get('/v1/web/brand', { url });
+  }
+
+  /** A public Instagram account: exact counts, bio, links, engagement and its latest posts and Reels. 2 credits. */
+  instagramProfile(username, options = {}) {
+    return this.#get('/v1/instagram/profile', { username, ...options });
   }
 
   /** The account behind the key: its email and credit balance. Free. */

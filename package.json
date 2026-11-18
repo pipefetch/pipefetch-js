@@ -1,7 +1,7 @@
 {
   "name": "pipefetch",
-  "version": "0.2.0",
-  "description": "YouTube transcripts, videos, channels, search and comments, plus website contacts and brand data, as JSON. Client for the Pipefetch API.",
+  "version": "0.3.0",
+  "description": "YouTube transcripts, videos, channels, search and comments, website contacts and brand data, and Instagram profiles, as JSON. Client for the Pipefetch API.",
   "type": "module",
   "exports": {
     ".": {
@@ -33,6 +33,8 @@
     "logo-api",
     "email-extractor",
     "website-contacts",
+    "instagram-api",
+    "instagram-profile",
     "pipefetch"
   ],
   "homepage": "https://pipefetch.com/docs",
