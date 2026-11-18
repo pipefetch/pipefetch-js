@@ -4,7 +4,7 @@
  * Documentation: https://pipefetch.com/docs
  */
 
-export const VERSION = '0.1.0';
+export const VERSION = '0.1.1';
 const DEFAULT_BASE_URL = 'https://pipefetch.com';
 /** Statuses that mean "try again": the request was not charged and may succeed on a retry. */
 const RETRYABLE_STATUS = new Set([502, 503, 504]);

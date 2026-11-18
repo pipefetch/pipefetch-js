@@ -1,6 +1,6 @@
 {
   "name": "pipefetch",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "YouTube transcripts, video details, channels, search and comments as JSON. Client for the Pipefetch API.",
   "type": "module",
   "exports": {
