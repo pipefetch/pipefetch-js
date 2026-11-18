@@ -1,11 +1,11 @@
 /**
- * Pipefetch client for JavaScript: YouTube transcripts, videos, channels, search and comments, the
- * contact details and brand a company's website publishes, and public Instagram profiles, as JSON.
+ * Pipefetch client for JavaScript: public web data as JSON, from video platforms, social networks and
+ * company websites. Every endpoint works through get(); the common ones also have a method of their own.
  * No dependencies. Works wherever `fetch` exists: Node.js 18+, Deno, Bun, Cloudflare Workers.
  * Documentation: https://pipefetch.com/docs
  */
 
-export const VERSION = '0.3.0';
+export const VERSION = '0.4.0';
 const DEFAULT_BASE_URL = 'https://pipefetch.com';
 /** Statuses that mean "try again": the request was not charged and may succeed on a retry. */
 const RETRYABLE_STATUS = new Set([502, 503, 504]);
@@ -121,6 +121,17 @@ export class Pipefetch {
   /** A public Instagram account: exact counts, bio, links, engagement and its latest posts and Reels. 2 credits. */
   instagramProfile(username, options = {}) {
     return this.#get('/v1/instagram/profile', { username, ...options });
+  }
+
+  /**
+   * Any endpoint, by its path: `get('/v1/web/brand', { url: 'stripe.com' })`. Use it for endpoints that
+   * are newer than this version of the library; the reference at pipefetch.com/docs lists them all.
+   */
+  get(path, params = {}) {
+    if (typeof path !== 'string' || !path.startsWith('/v1/')) {
+      throw new InvalidRequestError('get() takes the path of an endpoint, such as "/v1/youtube/video".', { code: 'invalid_request' });
+    }
+    return this.#get(path, params);
   }
 
   /** The account behind the key: its email and credit balance. Free. */

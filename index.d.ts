@@ -403,6 +403,11 @@ export declare class Pipefetch {
   websiteBrand(url: string): Promise<WebsiteBrand>;
   /** A public Instagram account: exact counts, bio, links, engagement and its latest posts and Reels. 2 credits. */
   instagramProfile(username: string, options?: InstagramProfileOptions): Promise<InstagramProfile>;
+  /**
+   * Any endpoint, by its path: `get('/v1/web/brand', { url: 'stripe.com' })`. Use it for endpoints that
+   * are newer than this version of the library; the reference at pipefetch.com/docs lists them all.
+   */
+  get<T = unknown>(path: string, params?: Record<string, string | number | boolean | undefined>): Promise<T>;
   /** The account behind the key: its email and credit balance. Free. */
   account(): Promise<Account>;
 }

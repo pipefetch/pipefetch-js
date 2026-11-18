@@ -50,6 +50,7 @@ test('every method calls its endpoint with its parameters', async () => {
   await pf.websiteContacts('apify.com', { pages: 3 });
   await pf.websiteBrand('https://stripe.com');
   await pf.instagramProfile('@nasa', { posts: false });
+  await pf.get('/v1/some/new-endpoint', { id: 'abc', limit: 3, skip: undefined });
   await pf.account();
   assert.deepEqual(
     fake.calls.map((c) => c.url.pathname + c.url.search),
@@ -63,6 +64,7 @@ test('every method calls its endpoint with its parameters', async () => {
       '/v1/web/contacts?url=apify.com&pages=3',
       '/v1/web/brand?url=https%3A%2F%2Fstripe.com',
       '/v1/instagram/profile?username=%40nasa&posts=false',
+      '/v1/some/new-endpoint?id=abc&limit=3',
       '/v1/account',
     ],
   );
