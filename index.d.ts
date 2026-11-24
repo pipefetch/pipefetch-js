@@ -342,8 +342,10 @@ export interface InstagramProfile {
   pronouns: string[];
   hasReels: boolean | null;
   hasThreadsProfile: boolean | null;
-  /** Instagram's own signed address: it stops working after some hours. */
+  /** Instagram's own signed address, 150 x 150: it stops working after some hours. */
   profilePicUrl: string | null;
+  /** The same picture at up to 640 x 640, from the account's Threads profile; null when it has none. */
+  profilePicUrlHD: string | null;
   latestPostAt: string | null;
   avgLikes: number | null;
   avgComments: number | null;
